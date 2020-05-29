@@ -9,4 +9,4 @@ EXPOSE 80
 
 ADD ./www /var/www/localhost/htdocs
 
-CMD ["apache2-foreground"]
+CMD ["httpd -D FOREGROUND"]
