@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  openldap:
+    image: hyr326/openldap:latest
+    volumes:
+      - ./data/openldap-data:/var/lib/openldap/openldap-data
+      - ./data/slapd.d:/etc/openldap/slapd.d
+    restart: always
+    ports:
+      - "389:389"
+    environment:
+      LDAP_ORGANIZATION: example
+      LDAP_DOMAIN: example.org
+      LDAP_PASSWORD: admin
+      LDAP_RFC2307BIS_SCHEMA: true
+      LDAP_LOGLEVE: 1
+
+    networks:
+      - lum
+  lum:
+    image: hyr326/ldap-user-manager:latest    
+    depends_on: 
+      - openldap
+    restart: on-failure
+    ports:
+      - "80:80"
+    environment:
+      LDAP_BASE_DN: dc=example,dc=org
+      LDAP_ADMINS_GROUP: admins
+      LDAP_ADMIN_BIND_DN: cn=admin,dc=example,dc=org
+      LDAP_ADMIN_BIND_PWD: admin
+      EMAIL_DOMAIN: example.org
+      LDAP_REQUIRE_STARTTLS: FALSE
+      LDAP_USES_NIS_SCHEMA: FALSE
+
+    networks:
+      - lum
+
+networks:
+  lum:
