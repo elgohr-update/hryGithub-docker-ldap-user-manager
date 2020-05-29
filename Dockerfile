@@ -1,7 +1,7 @@
-FROM alpine:3.11
+FROM alpine:latest
 
 
-RUN echo -e "http://mirrors.aliyun.com/alpine/v3.6/main\nhttp://mirrors.aliyun.com/alpine/v3.6/community" > /etc/apk/repositories
+RUN sed -i "s@dl-cdn.alpinelinux.org@mirrors.aliyun.com@g" /etc/apk/repositories
 RUN apk update && apk add --no-cache apache2 php7 php7-apache2 openldap-dev \
     && rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /var/cache/distfiles/* /var/www/localhost/htdocs/*
 
