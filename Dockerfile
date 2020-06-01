@@ -9,4 +9,6 @@ EXPOSE 80
 
 ADD ./www /var/www/localhost/htdocs
 
+VOLUME /var/www/localhost/htdocs
+
 CMD ["httpd", "-DFOREGROUND"]
