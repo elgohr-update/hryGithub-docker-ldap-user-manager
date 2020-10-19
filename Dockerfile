@@ -7,6 +7,7 @@ RUN apk update && apk add --no-cache apache2 php7 php7-apache2 php7-ldap openlda
 
 EXPOSE 80
 
+
 ADD ./www /var/www/localhost/htdocs
 
 VOLUME /var/www/localhost/htdocs
