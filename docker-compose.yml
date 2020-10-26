@@ -22,7 +22,9 @@ services:
     image: hyr326/ldap-user-manager:latest    
     depends_on: 
       - openldap
-    restart: on-failure
+    volumes:
+      - ./web:/var/www/localhost/htdocs
+    restart: always
     ports:
       - "80:80"
     environment:
